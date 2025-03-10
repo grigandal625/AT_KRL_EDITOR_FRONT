@@ -103,6 +103,9 @@ export const MFGraphEditor = ({ value, onChange, hideApply, form }) => {
                     </Col>
                 </Row>
                 <Form layout="vertical" form={graphForm} onFieldsChange={updateGraph}>
+                    <Form.Item name="tag" hidden>
+                        <Input value="parameter" />
+                    </Form.Item>
                     <Form.Item label="Имя функции принадлежности" rules={[{ required: true, message: "Укажите имя функции принадлежности" }]} name="name">
                         <Input />
                     </Form.Item>
@@ -148,6 +151,9 @@ export const MFGraphEditor = ({ value, onChange, hideApply, form }) => {
                                                 <Space key={key} align="start">
                                                     <Button type="link" icon={<MinusCircleOutlined />} onClick={() => remove(index)} />
                                                     <span style={{ fontSize: 18 }}>x:</span>
+                                                    <Form.Item name={[name, "tag"]} hidden>
+                                                        <Input value="point" />
+                                                    </Form.Item>
                                                     <Form.Item
                                                         initialValue={graphForm.getFieldValue("min")}
                                                         name={[name, "x"]}
