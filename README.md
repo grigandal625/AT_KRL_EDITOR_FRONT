@@ -1,4 +1,58 @@
-# Getting Started with Create React App
+# Build in docker
+
+Dockerfile: [Dockerfile](./Dockerfile)
+
+## `.env` variables
+
+Before build, complete `.env` file with:
+
+```bash
+REACT_APP_API_PROTOCOL=http # backend api protocol
+REACT_APP_API_HOST=localhost # backend api host
+REACT_APP_API_PORT=8888 # backend api port
+```
+
+## Build
+
+Building into image with name `ailab/at-krl-front:alpha`:
+
+```bash
+docker buildx build -t "ailab/at-krl-front:alpha" .
+```
+or
+```bash
+make build
+```
+
+## Run
+
+Running container of built image on port `5555`:
+
+```bash
+sudo docker run --name at-krl -d -p 5555:5555 ailab/at-krl-front:alpha 
+```
+or
+
+```bash
+make start
+```
+
+## Stop
+
+Stopping container:
+
+```bash
+if docker kill at-krl; then echo "killed"; fi
+if docker container rm at-krl; then echo "removed"; fi
+```
+
+or
+
+```bash
+make stop
+```
+
+# Development: Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
