@@ -6,6 +6,7 @@ import { NFInput, NFValueInput } from "../../../utils/formula_editor/NFWrapper";
 import mobileCheck from "../../../utils/mobileCheck";
 
 export default ({ form, onValuesChange, ...props }) => {
+    
     return (
         <Form form={form} onValuesChange={onValuesChange} layout="vertical" {...props}>
             <Form.Item

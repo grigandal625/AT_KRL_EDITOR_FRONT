@@ -27,14 +27,6 @@ const NFFormulaTreeItem = ({ item, updateItem, noAllen }) => {
     const itemType = data.itemType;
     const itemValue = data.value;
 
-    const kbEventsStore = useSelector(selectkbEvents);
-    const kbIntervalsStore = useSelector(selectkbIntervals);
-    const storeParts = {
-        EvIntRel: { leftStore: kbEventsStore, rightStore: kbIntervalsStore },
-        EvRel: { leftStore: kbEventsStore, rightStore: kbEventsStore },
-        IntRel: { leftStore: kbIntervalsStore, rightStore: kbIntervalsStore },
-    };
-
     const onVChange = (itemType, value) => {
         const newItem = { ...item };
         const newData = { ...data, itemType, value };
@@ -57,28 +49,7 @@ const NFFormulaTreeItem = ({ item, updateItem, noAllen }) => {
                 newItem.data = newData;
                 newItem.isLeaf = false;
             } else if (Object.keys(temporal.operations).includes(itemType)) {
-                const oldOperation = temporal.operations[data.itemType];
-                const newOperation = temporal.operations[itemType];
-                const newTag = newData.value?.tag || newOperation.default_tag;
-                newData.value = { ...newData.value, tag: newTag, Value: itemType };
-
-                if (oldOperation) {
-                    let oldLeft, oldRight;
-                    const oldTag = data?.value?.tag;
-                    if (oldTag) {
-                        oldLeft = storeParts[oldTag].leftStore.items.find((e) => e.kb_id == data?.value?.left?.Name);
-                        oldRight = storeParts[oldTag].rightStore.items.find((e) => e.kb_id == data?.value?.right?.Name);
-                    }
-
-                    if (newTag && newData.value) {
-                        if (!newData.value.left && storeParts[oldTag].leftStore === storeParts[newTag].leftStore) {
-                            newData.value.left = data.value.left;
-                        }
-                        if (!newData.value.right && storeParts[oldTag].rightStore === storeParts[newTag].rightStore) {
-                            newData.value.right = data.value.right;
-                        }
-                    }
-                }
+                debugger;
                 newItem.data = newData;
                 newItem.children = undefined;
                 newItem.isLeaf = true;
@@ -141,12 +112,14 @@ const NFFormulaTreeItem = ({ item, updateItem, noAllen }) => {
 };
 
 export default ({ value, onChange, noAllen, noScrollOverflow, minHeight }) => {
-    let formulaTree = ExpressionJSONToTreeItem(value, false);
+    
+    let formulaTree = ExpressionJSONToTreeItem(value);
     const allKeys = getAllKeys(formulaTree);
     const [expandedKeys, setExpandedKeys] = useState(allKeys);
     const [allow, setAllow] = useState(true);
 
     const updateItem = (key, newItem) => {
+        
         const newTree = { ...formulaTree };
         const item = getItemByKey(newTree, key);
         for (let k in newItem) {

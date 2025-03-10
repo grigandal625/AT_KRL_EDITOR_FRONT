@@ -105,7 +105,8 @@ export default () => {
     const autoSave = () => {
         if (!inFrame) {
             setAutoSaving(true);
-            dispatch(setTimer(update));
+            const timer = setTimeout(update, 1000)
+            dispatch(setTimer(timer));
         }
     };
 

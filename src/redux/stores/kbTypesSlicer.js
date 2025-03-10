@@ -83,11 +83,10 @@ const kbTypesSlice = createSlice({
             state.previewKrl = undefined;
         },
         setTimer: (state, action) => {
-            const update = action.payload;
             if (state.timer) {
                 clearTimeout(state.timer);
             }
-            state.timer = setTimeout(update, 1000)
+            state.timer = action.payload;
         },
         setAutoSaveStatus: (state, action) => {
             state.autoSaveStatus = action.payload

@@ -10,6 +10,7 @@ import { useEffect, useState } from "react";
 import { DeleteOutlined, FileAddOutlined, FolderViewOutlined, SettingOutlined, CheckOutlined, ExclamationCircleOutlined, SaveOutlined } from "@ant-design/icons";
 
 export default () => {
+    
     const { id, ruleId } = useParams();
     const navigate = useNavigate();
     const kbRulesStore = useSelector(selectkbRules);
@@ -84,6 +85,7 @@ export default () => {
     };
 
     const update = async () => {
+        
         try {
             let data = await form.validateFields();
             const cond_instr = await condInstrFrom.validateFields();
@@ -98,7 +100,8 @@ export default () => {
     const autoSave = () => {
         if (!inFrame) {
             setAutoSaving(true);
-            dispatch(setTimer(update));
+            const timer = setTimeout(update, 1000)
+            dispatch(setTimer(timer));
         }
     };
 

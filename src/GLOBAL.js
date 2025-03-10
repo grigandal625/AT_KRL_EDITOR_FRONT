@@ -75,7 +75,7 @@ const temporal = {
             meta: "allen",
             label: "b",
             values: ["b"],
-            default_tag: "EvIntRel"
+            default_tag: "b"
         },
         bi: {
             interval_interval: true,
@@ -88,7 +88,7 @@ const temporal = {
             meta: "allen",
             label: "bi",
             values: ["bi"],
-            default_tag: "IntRel"
+            default_tag: "bi"
         },
         m: {
             interval_interval: true,
@@ -101,7 +101,7 @@ const temporal = {
             meta: "allen",
             label: "m",
             values: ["m"],
-            default_tag: "IntRel"
+            default_tag: "m"
         },
         mi: {
             interval_interval: true,
@@ -114,7 +114,7 @@ const temporal = {
             meta: "allen",
             label: "mi",
             values: ["mi"],
-            default_tag: "IntRel"
+            default_tag: "mi"
         },
         s: {
             interval_interval: true,
@@ -127,7 +127,7 @@ const temporal = {
             meta: "allen",
             label: "s",
             values: ["s"],
-            default_tag: "IntRel"
+            default_tag: "s"
         },
         si: {
             interval_interval: true,
@@ -140,7 +140,7 @@ const temporal = {
             meta: "allen",
             label: "si",
             values: ["si"],
-            default_tag: "IntRel"
+            default_tag: "si"
         },
         f: {
             interval_interval: true,
@@ -153,7 +153,7 @@ const temporal = {
             meta: "allen",
             label: "f",
             values: ["f"],
-            default_tag: "IntRel"
+            default_tag: "f"
         },
         fi: {
             interval_interval: true,
@@ -166,7 +166,7 @@ const temporal = {
             meta: "allen",
             label: "fi",
             values: ["fi"],
-            default_tag: "IntRel"
+            default_tag: "fi"
         },
         d: {
             interval_interval: true,
@@ -179,7 +179,7 @@ const temporal = {
             meta: "allen",
             label: "d",
             values: ["d"],
-            default_tag: "EvIntRel"
+            default_tag: "d"
         },
         di: {
             interval_interval: true,
@@ -192,7 +192,7 @@ const temporal = {
             meta: "allen",
             label: "di",
             values: ["di"],
-            default_tag: "IntRel"
+            default_tag: "di"
         },
         o: {
             interval_interval: true,
@@ -205,7 +205,7 @@ const temporal = {
             meta: "allen",
             label: "o",
             values: ["o"],
-            default_tag: "IntRel"
+            default_tag: "o"
         },
         oi: {
             interval_interval: true,
@@ -218,7 +218,7 @@ const temporal = {
             meta: "allen",
             label: "oi",
             values: ["oi"],
-            default_tag: "IntRel"
+            default_tag: "oi"
         },
         e: {
             interval_interval: true,
@@ -231,7 +231,7 @@ const temporal = {
             meta: "allen",
             label: "e",
             values: ["e"],
-            default_tag: "EvRel"
+            default_tag: "e"
         },
         a: {
             interval_interval: false,
@@ -244,7 +244,7 @@ const temporal = {
             meta: "allen",
             label: "a",
             values: ["a"],
-            default_tag: "EvIntRel"
+            default_tag: "a"
         },
     },
 };

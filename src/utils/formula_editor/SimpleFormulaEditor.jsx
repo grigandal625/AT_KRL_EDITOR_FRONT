@@ -8,7 +8,7 @@ import { ExpressionJSONToTreeItem, getAllKeys, getItemByKey, treeItemToExpressio
 import { operations, temporal } from "../../GLOBAL";
 import { getKbTypes, selectKbTypes } from "../../redux/stores/kbTypesSlicer";
 
-export const ReferenceInput = ({ value, onChange, simpleMode }) => {
+export const ReferenceInput = ({ value, onChange }) => {
     const dispatch = useDispatch();
     const kbObjectsStore = useSelector(selectKbObjects);
     const { id } = useParams();
@@ -20,17 +20,10 @@ export const ReferenceInput = ({ value, onChange, simpleMode }) => {
     }, [id]);
 
     let currentObjectKbId, currentAttrKbId;
-    if (simpleMode) {
-        const Attribute = { ...value, tag: "Attribute" };
-        const objectAndAttrStr = Attribute.Value;
-        if (objectAndAttrStr) {
-            [currentObjectKbId, currentAttrKbId] = objectAndAttrStr.split(".");
-        }
-    } else {
-        const ref = { ...value, tag: "ref" };
-        currentObjectKbId = ref.id;
-        currentAttrKbId = (ref.ref && ref.ref.id) || undefined;
-    }
+    
+    const ref = { ...value, tag: "ref" };
+    currentObjectKbId = ref.id;
+    currentAttrKbId = (ref.ref && ref.ref.id) || undefined;
 
     const objectData = kbObjectsStore.items.find((obj) => obj.kb_id === currentObjectKbId);
     const attrData = objectData && objectData.ko_attributes.find((attr) => attr.kb_id === currentAttrKbId);
@@ -42,9 +35,9 @@ export const ReferenceInput = ({ value, onChange, simpleMode }) => {
     const selectedAttr = attrData && attrData.id;
 
     const onRefChange = (objectId, attrId) => {
-        const ref = simpleMode ? { ...value, tag: "Attribute" } : { ...value, tag: "ref" };
-        const currentObjectKbId = simpleMode ? ref.Value && ref.Value.split(".")[0] : ref.id;
-        const currentAttrKbId = simpleMode ? ref.Value && ref.Value.split(".")[1] : (ref.ref && ref.ref.id) || undefined;
+        const ref = { ...value, tag: "ref" };
+        const currentObjectKbId = ref.id;
+        const currentAttrKbId = (ref.ref && ref.ref.id) || undefined;
 
         const newObjectData = kbObjectsStore.items.find((obj) => obj.id === objectId);
         const newAttrData = newObjectData && newObjectData.ko_attributes.find((attr) => attr.id === attrId);
@@ -55,12 +48,12 @@ export const ReferenceInput = ({ value, onChange, simpleMode }) => {
         if (newObjectData) {
             if (newAttrData) {
                 if (currentObjectKbId !== newObjectKbId || currentAttrKbId !== newAttrKbId) {
-                    const newValue = simpleMode ? { ...ref, Value: `${newObjectKbId}.${newAttrKbId}` } : { ...ref, id: newObjectKbId, ref: { id: newAttrKbId, tag: "ref" } };
+                    const newValue = { ...ref, id: newObjectKbId, tag: "ref", ref: { id: newAttrKbId, tag: "ref" } };
                     onChange(newValue);
                 }
             } else {
                 if (currentObjectKbId !== newObjectKbId) {
-                    const newValue = simpleMode ? { ...ref, Value: newObjectKbId } : { ...ref, id: newObjectKbId, ref: undefined };
+                    const newValue = { ...ref, id: newObjectKbId, tag: "ref", ref: undefined };
                     onChange(newValue);
                 }
             }
@@ -101,21 +94,14 @@ export const ReferenceInput = ({ value, onChange, simpleMode }) => {
     );
 };
 
-export const ValueInput = ({ value, onChange, simpleMode }) => {
+export const ValueInput = ({ value, onChange }) => {
     const valueGetters = {
         string: String,
         number: Number,
         boolean: Boolean,
     };
 
-    const simpleTags = {
-        string: "String",
-        number: "Number",
-        boolean: "TruthVal",
-    };
     const dispatch = useDispatch();
-
-    const simpleTagTypes = Object.fromEntries(Object.entries(simpleTags).map(([k, v]) => [v, k]));
 
     const kbTypesStore = useSelector(selectKbTypes);
     const { id } = useParams();
@@ -153,13 +139,8 @@ export const ValueInput = ({ value, onChange, simpleMode }) => {
         .filter((value, i, arr) => arr.map((v) => v.value).indexOf(value.value) === i);
 
     if (value) {
-        if (simpleMode) {
-            valueType = simpleTagTypes[value.tag] || "string";
-            inputValue = valueGetters[valueType](value.Value);
-        } else {
-            inputValue = value.content;
-            valueType = typeof inputValue;
-        }
+        inputValue = value.content;
+        valueType = typeof inputValue;
     }
 
     const options = [
@@ -168,8 +149,8 @@ export const ValueInput = ({ value, onChange, simpleMode }) => {
         { value: "boolean", label: "Логическое" },
     ];
 
-    const updateValue = (type, v) => {
-        const newValue = simpleMode ? { ...value, tag: simpleTags[type], Value: v } : { ...value, content: v };
+    const updateValue = (v) => {
+        const newValue = { ...value, content: v };
         onChange(newValue);
     };
 
@@ -182,7 +163,7 @@ export const ValueInput = ({ value, onChange, simpleMode }) => {
                 placeholder="Введите символьное значение"
                 value={inputValue}
                 options={inputValue ? stringValueOptions.filter((v) => v.value.toLowerCase().includes(String(inputValue).toLowerCase())) : stringValueOptions}
-                onChange={(e) => updateValue(valueType, e)}
+                onChange={updateValue}
             />
         ),
         number: (
@@ -191,11 +172,11 @@ export const ValueInput = ({ value, onChange, simpleMode }) => {
                 style={{ width: "100%", minWidth: 100 }}
                 placeholder="Введите числовое значение"
                 value={inputValue}
-                onChange={(v) => updateValue(valueType, v)}
+                onChange={updateValue}
             />
         ),
         boolean: (
-            <Checkbox checked={inputValue} onChange={(e) => updateValue(valueType, e.target.checked)}>
+            <Checkbox checked={inputValue} onChange={(e) => updateValue(e.target.checked)}>
                 Логическое значение
             </Checkbox>
         ),
@@ -212,7 +193,7 @@ export const ValueInput = ({ value, onChange, simpleMode }) => {
                     if (Number.isNaN(newValue)) {
                         newValue = undefined;
                     }
-                    updateValue(newType, newValue);
+                    updateValue(newValue);
                 }}
                 optionType="button"
             />
@@ -248,7 +229,7 @@ const FormulaTreeItem = ({ item, updateItem }) => {
                     delete newData.value;
                     delete newData.itemType;
                 } else if (!value) {
-                    newData.value = { value: { tag: "String", Value: "" }, ref: { tag: "Attribute" } }[itemType];
+                    newData.value = { value: { tag: "value", content: "" }, ref: { tag: "ref" } }[itemType];
                 }
                 newItem.data = newData;
                 newItem.children = undefined;
@@ -259,8 +240,8 @@ const FormulaTreeItem = ({ item, updateItem }) => {
     };
 
     const items = {
-        ref: <ReferenceInput simpleMode value={itemValue} onChange={(v) => onVChange(itemType, v)} />,
-        value: <ValueInput simpleMode value={itemValue} onChange={(v) => onVChange(itemType, v)} />,
+        ref: <ReferenceInput value={itemValue} onChange={(v) => onVChange(itemType, v)} />,
+        value: <ValueInput value={itemValue} onChange={(v) => onVChange(itemType, v)} />,
     };
 
     return (
@@ -287,7 +268,7 @@ const FormulaTreeItem = ({ item, updateItem }) => {
 };
 
 export default ({ value, onChange, noScrollOverflow, minHeight }) => {
-    let formulaTree = ExpressionJSONToTreeItem(value, true);
+    let formulaTree = ExpressionJSONToTreeItem(value);
     const allKeys = getAllKeys(formulaTree);
     const [expandedKeys, setExpandedKeys] = useState(allKeys);
     const [allow, setAllow] = useState(true);
