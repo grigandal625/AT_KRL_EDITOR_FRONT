@@ -27,7 +27,7 @@ export default ({ form, onValuesChange, forCreate, ...props }) => {
                 <AutoComplete options={groups} placeholder="Выберите группу или укажите новую" />
             </Form.Item>
             <Form.Item name="comment" label="Комментарий">
-                <Input.TextArea />
+                <Input />
             </Form.Item>
         </Form>
     );

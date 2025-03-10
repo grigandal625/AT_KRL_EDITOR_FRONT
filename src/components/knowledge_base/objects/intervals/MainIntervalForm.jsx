@@ -19,7 +19,7 @@ export default ({ form, onValuesChange, forCreate, ...props }) => {
                 <Input />
             </Form.Item>
             <Form.Item name="comment" label="Комментарий">
-                <Input.TextArea />
+                <Input />
             </Form.Item>
         </Form>
     );

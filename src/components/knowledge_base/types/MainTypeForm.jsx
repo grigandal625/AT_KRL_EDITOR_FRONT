@@ -45,7 +45,7 @@ export default ({ form, showSuffix, forCreate, onValuesChange, ...props }) => {
                 </Select>
             </Form.Item>
             <Form.Item label="Комментарий" name="comment">
-                <Input.TextArea />
+                <Input />
             </Form.Item>
         </Form>
     );
