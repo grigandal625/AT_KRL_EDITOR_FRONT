@@ -185,7 +185,7 @@ export default () => {
                                     <br />
                                     <br />
                                     <Typography.Paragraph>
-                                        <code>{kbStore.knowledgeBase.error}</code>
+                                        <pre style={{ textAlign: "left" }}>{kbStore.knowledgeBase.error}</pre>
                                     </Typography.Paragraph>
                                 </>
                             }
