@@ -37,6 +37,8 @@ or
 make start
 ```
 
+To change port - modify it in [docker/nginx.conf](docker/nginx.conf) and rebuild docker image
+
 ## Stop
 
 Stopping container:
