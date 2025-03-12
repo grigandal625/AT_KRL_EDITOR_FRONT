@@ -35,7 +35,7 @@ export const ReferenceInput = ({ value, onChange }) => {
     const selectedAttr = attrData && attrData.id;
 
     const onRefChange = (objectId, attrId) => {
-        const ref = { ...value, tag: "ref" };
+        const ref = { ref: value?.ref, id: value?.id, tag: "ref" };
         const currentObjectKbId = ref.id;
         const currentAttrKbId = (ref.ref && ref.ref.id) || undefined;
 
@@ -150,7 +150,7 @@ export const ValueInput = ({ value, onChange }) => {
     ];
 
     const updateValue = (v) => {
-        const newValue = { ...value, content: v };
+        const newValue = { tag: "value", content: v };
         onChange(newValue);
     };
 
