@@ -7,9 +7,10 @@ Dockerfile: [Dockerfile](./Dockerfile)
 Before build, complete `.env` file with:
 
 ```bash
-REACT_APP_API_PROTOCOL=http # backend api protocol
-REACT_APP_API_HOST=localhost # backend api host
-REACT_APP_API_PORT=8888 # backend api port
+PORT=5555 # REQUIRED - port of frontend server
+API_PROTOCOL=http # backend api protocol (not required, default: http)
+API_HOST=localhost # backend api host (not required, default: page location host)
+API_PORT=8888 # backend api port (not required, default: page location port)
 ```
 
 ## Build
@@ -17,7 +18,7 @@ REACT_APP_API_PORT=8888 # backend api port
 Building into image with name `ailab/at-krl-front:alpha`:
 
 ```bash
-docker buildx build -t "ailab/at-krl-front:alpha" .
+docker buildx build -t "grigandal625/at-krl-editor-front:latest" .
 ```
 or
 ```bash
@@ -29,7 +30,7 @@ make build
 Running container of built image on port `5555`:
 
 ```bash
-sudo docker run --name at-krl -d -p 5555:5555 ailab/at-krl-front:alpha 
+docker run --name at-krl-editor-front -d -p 5555:5555 --env-file .env grigandal625/at-krl-editor-front:latest
 ```
 or
 

@@ -1,7 +1,7 @@
-const apiPort = process.env.REACT_APP_API_PORT || window.location.port;
+const apiPort = window.env.API_PORT || window.location.port;
 
-const apiLocation = `${process.env.REACT_APP_API_PROTOCOL || window.location.protocol}//${
-    process.env.REACT_APP_API_HOST || window.location.hostname
+const apiLocation = `${window.env.API_PROTOCOL || window.location.protocol}//${
+    window.env.API_HOST || window.location.hostname
 }${apiPort ? ":" + apiPort : ""}`;
 const loadStatuses = { initial: "initial", loading: "loading", error: "error", loaded: "loaded" };
 
