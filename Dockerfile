@@ -8,7 +8,6 @@ COPY ./config /app/config
 COPY ./public /app/public
 COPY ./scripts /app/scripts
 COPY ./src /app/src
-COPY ./.env /app/
  
 RUN npm run build
 
